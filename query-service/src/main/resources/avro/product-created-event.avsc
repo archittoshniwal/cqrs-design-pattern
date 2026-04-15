@@ -1,0 +1,38 @@
+
+{
+"type": "record",
+"name": "CreateProductEvent",
+"namespace": "com.archlabs.events",
+"fields": [
+{
+  "name": "eventType",
+  "type": "string"
+},
+{
+"name": "product",
+  "type": {
+    "type": "record",
+    "name": "Product",
+    "fields": [
+      {
+        "name": "id",
+        "type": "long"
+      },
+{
+"name": "name",
+"type": "string"
+},
+{
+"name": "description",
+"type": "string"
+},
+{
+"name": "price",
+"type": "double"
+}
+]
+}
+}
+]
+}
+

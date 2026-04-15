@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: command-service
+
+  kafka:
+    producer:
+      bootstrap-servers: localhost:9092
+      key-serializer: org.apache.kafka.common.serialization.LongSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+    properties:
+      schema:
+        registry:
+          url: http://localhost:8081
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cqrs-writeDB
+    username: postgres
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+server:
+  port: 9191

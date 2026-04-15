@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: query-service
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: product-event-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+
+      properties:
+        schema.registry.url: http://localhost:8081
+
+        # 👇 VERY IMPORTANT
+        specific.avro.reader: true
+
+    listener:
+      missing-topics-fatal: false
+
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/cqrs-readDB
+    username: postgres
+    password:
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+
+server:
+  port: 9292
