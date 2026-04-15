@@ -3,6 +3,10 @@ spring:
     name: command-service
 
   kafka:
+    topic:
+      user-random-topic: user-random-topic
+      product-event-topic: product-event-topic
+
     producer:
       bootstrap-servers: localhost:9092
       key-serializer: org.apache.kafka.common.serialization.LongSerializer

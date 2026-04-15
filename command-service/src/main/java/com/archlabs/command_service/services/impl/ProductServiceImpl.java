@@ -7,6 +7,7 @@ import com.archlabs.command_service.services.ProductService;
 import com.archlabs.command_service.utils.ProductUtils;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import com.archlabs.events.*;
@@ -19,6 +20,9 @@ public class ProductServiceImpl implements ProductService {
     final private ModelMapper modelMapper;
     final private ProductRepository productRepository;
     final private KafkaTemplate<String, CreateProductEvent> kafkaTemplate;
+
+    @Value("${kafka.topic.product-event-topic}")
+    private String KAFKA_TOPIC_EVENT;
 
     public Product createProduct(ProductEvent productEvent) {
 
@@ -33,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         CreateProductEvent createProductEvent = modelMapper.map(productEvent, CreateProductEvent.class);
 
         // sendEvent in kafka
-        kafkaTemplate.send("product-event-topic",createProductEvent);
+        kafkaTemplate.send(KAFKA_TOPIC_EVENT,createProductEvent);
 
         return product;
     }
@@ -52,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
         //send event to kafka
         CreateProductEvent createProductEvent = modelMapper.map(productEvent, CreateProductEvent.class);
 
-        kafkaTemplate.send("product-event-topic", createProductEvent);
+        kafkaTemplate.send(KAFKA_TOPIC_EVENT, createProductEvent);
 
         return productDO;
 
